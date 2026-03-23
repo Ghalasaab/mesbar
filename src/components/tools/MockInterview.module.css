@@ -1,0 +1,100 @@
+.wrap { max-width: 780px; margin: 0 auto; padding: 48px 20px 80px; animation: fadeIn .4s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+.header { margin-bottom: 36px; }
+.eyebrow { font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--pb); font-weight:700; margin-bottom:10px; display:block; }
+.title { font-family:'Syne',sans-serif; font-size:clamp(26px,3.5vw,40px); font-weight:800; letter-spacing:-1.5px; margin-bottom:12px; }
+.sub { font-size:15px; color:var(--text-dim); max-width:540px; line-height:1.7; }
+
+/* SETUP */
+.setupCard { background:var(--card); border:1px solid var(--border); border-radius:var(--radius-xl); padding:32px; }
+.setupTitle { font-family:'Syne',sans-serif; font-size:20px; font-weight:700; margin-bottom:24px; }
+.roleGrid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:28px; }
+.roleGroup { display:flex; flex-direction:column; gap:8px; }
+.roleGroupLabel { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-muted); font-weight:700; margin-bottom:4px; }
+.roleCard { display:flex; align-items:center; gap:10px; padding:13px 16px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); cursor:pointer; transition:var(--transition); font-family:inherit; font-size:13px; font-weight:500; color:var(--text-dim); position:relative; text-align:start; }
+.roleCard:hover { border-color:var(--border-b); color:var(--text); background:var(--pd); }
+.roleCardActiveTech { border-color:var(--tech)!important; background:var(--tech-bg)!important; color:var(--tech-light)!important; }
+.roleCardActiveBiz  { border-color:var(--biz)!important;  background:var(--biz-bg)!important;  color:var(--biz-light)!important; }
+.roleIcon { font-size:16px; }
+.roleCheck { position:absolute; right:12px; color:var(--pb); font-weight:700; font-size:13px; }
+
+.metricsPreview { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:14px 18px; margin-bottom:24px; }
+.metricsPreviewLabel { font-size:11px; color:var(--text-muted); font-weight:700; text-transform:uppercase; letter-spacing:.5px; margin-bottom:10px; }
+.metricsPreviewRow { display:flex; gap:20px; flex-wrap:wrap; }
+.metricPreviewItem { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-dim); font-weight:500; }
+.metricIcon { font-size:14px; }
+
+.startBtn { width:100%; background:var(--p); color:#fff; border:none; padding:14px; border-radius:var(--radius-md); font-family:inherit; font-size:15px; font-weight:600; cursor:pointer; transition:var(--transition); box-shadow:var(--glow-sm); }
+.startBtn:hover { background:var(--pb); box-shadow:var(--glow); }
+.startBtn:disabled { opacity:.45; cursor:not-allowed; }
+
+/* INTERVIEW */
+.intHeader { margin-bottom:24px; padding-top:28px; }
+.intHeaderTop { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.intRole { font-size:12px; font-weight:700; color:var(--pb); }
+.intProgress { font-size:12px; color:var(--text-muted); }
+.progressTrack { height:4px; background:var(--border); border-radius:2px; overflow:hidden; }
+.progressFill { height:100%; border-radius:2px; background:linear-gradient(90deg,var(--p),var(--neon)); transition:width .5s ease; }
+
+.qSection { display:flex; flex-direction:column; gap:16px; }
+.qCard { background:var(--card); border:1px solid var(--border); border-radius:var(--radius-xl); padding:28px 32px; }
+.qNum { font-size:10px; color:var(--pb); font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:12px; }
+.qText { font-family:'Syne',sans-serif; font-size:clamp(16px,2.5vw,20px); font-weight:600; line-height:1.55; color:var(--text); }
+
+.answerSection { display:flex; flex-direction:column; gap:8px; }
+.answerLabel { font-size:11px; color:var(--text-muted); font-weight:700; text-transform:uppercase; letter-spacing:.5px; }
+.answerBox { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:14px; color:var(--text); font-size:14px; outline:none; resize:vertical; line-height:1.7; width:100%; min-height:160px; font-family:inherit; transition:var(--transition); }
+.answerBox:focus { border-color:var(--pb); box-shadow:0 0 0 3px rgba(123,79,255,.1); }
+.answerBox::placeholder { color:var(--text-muted); }
+
+.wordCount { font-size:12px; color:var(--text-muted); }
+.wordMin { color:var(--warning); }
+
+.submitBtn { background:var(--p); color:#fff; border:none; padding:14px; border-radius:var(--radius-md); font-family:inherit; font-size:14px; font-weight:600; cursor:pointer; transition:var(--transition); box-shadow:var(--glow-sm); display:flex; align-items:center; justify-content:center; gap:8px; }
+.submitBtn:hover { background:var(--pb); box-shadow:var(--glow); }
+.submitBtn:disabled { opacity:.55; cursor:not-allowed; }
+
+.spinner { width:16px; height:16px; border:2px solid rgba(255,255,255,.3); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+.dotRow { display:flex; gap:6px; justify-content:center; flex-wrap:wrap; }
+.dot { width:8px; height:8px; border-radius:50%; background:var(--border); transition:var(--transition); }
+.dotActive { background:var(--pb); transform:scale(1.3); }
+.dotDone { background:var(--p); }
+
+/* RESULT */
+.reportCard { background:var(--card); border:1px solid var(--border); border-radius:var(--radius-xl); overflow:hidden; }
+.overallSection { text-align:center; padding:36px 24px 28px; background:var(--surface); border-bottom:1px solid var(--border); }
+.overallLabel { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); font-weight:700; margin-bottom:12px; }
+.overallScore { font-family:'Syne',sans-serif; font-size:72px; font-weight:800; line-height:1; margin-bottom:6px; }
+.overallOf { font-size:22px; color:var(--text-muted); }
+.overallLabel2 { font-size:15px; font-weight:700; }
+
+.metricsGrid { display:grid; grid-template-columns:1fr 1fr; gap:0; }
+.metricCard { padding:20px 22px; border-bottom:1px solid var(--border); border-right:1px solid var(--border); }
+.metricCard:nth-child(even) { border-right:none; }
+.metricCard:nth-last-child(-n+2) { border-bottom:none; }
+.metricTop { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+.metricIconBig { font-size:18px; }
+.metricName { font-size:13px; font-weight:600; flex:1; }
+.metricScore { font-family:'Syne',sans-serif; font-size:18px; font-weight:800; }
+.metricBar { height:5px; background:var(--border); border-radius:3px; overflow:hidden; }
+.metricBarFill { height:100%; border-radius:3px; transition:width 1s ease .3s; }
+
+.tipsSection { padding:24px; border-top:1px solid var(--border); }
+.tipsTitle { font-size:11px; color:var(--pb); font-weight:700; letter-spacing:.8px; text-transform:uppercase; margin-bottom:16px; }
+.tipItem { display:flex; gap:12px; margin-bottom:12px; align-items:flex-start; }
+.tipNum { width:22px; height:22px; border-radius:50%; background:var(--pd); border:1px solid var(--border-b); color:var(--neon); font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'Syne',sans-serif; }
+.tipText { font-size:13px; color:var(--text-dim); line-height:1.65; }
+
+.reportActions { padding:20px 24px; border-top:1px solid var(--border); display:flex; justify-content:center; }
+.retryBtn { background:transparent; border:1px solid var(--border-b); color:var(--text-dim); padding:11px 28px; border-radius:var(--radius-md); font-family:inherit; font-size:13px; font-weight:500; cursor:pointer; transition:var(--transition); }
+.retryBtn:hover { background:var(--pd); color:var(--text); border-color:var(--p); }
+
+@media(max-width:640px) {
+  .roleGrid { grid-template-columns:1fr; }
+  .metricsGrid { grid-template-columns:1fr; }
+  .metricCard { border-right:none!important; }
+  .metricCard:nth-last-child(-n+2) { border-bottom:1px solid var(--border); }
+  .metricCard:last-child { border-bottom:none; }
+}

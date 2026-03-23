@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String
+  passwordHash  String?
+  language      String    @default("en")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  careerResults CareerResult[]
+  cvData        CvData[]
+  interviews    Interview[]
+  @@map("users")
+}
+model CareerResult {
+  id            String   @id @default(cuid())
+  userId        String
+  primaryDomain String
+  domainScore   Json
+  trackScores   Json
+  topTrack      String
+  topTrackPct   Float
+  answers       Json
+  createdAt     DateTime @default(now())
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("career_results")
+}
+model CvData {
+  id           String   @id @default(cuid())
+  userId       String
+  fullName     String
+  email        String?
+  targetRole   String?
+  targetTrack  String?
+  education    Json
+  experience   Json
+  skills       Json
+  projects     Json
+  certifications Json
+  atsScore     Int?
+  atsBreakdown Json?
+  enhancedExperience Json?
+  enhancedSummary    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("cv_data")
+}
+model Interview {
+  id          String   @id @default(cuid())
+  userId      String
+  targetRole  String
+  targetTrack String
+  domain      String
+  questions   Json
+  answers     Json     @default("[]")
+  evaluations Json     @default("[]")
+  overallScore Float?
+  suggestions Json?
+  status      String   @default("in_progress")
+  createdAt   DateTime @default(now())
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("interviews")
+}
+model Skill {
+  id       String @id @default(cuid())
+  name     String @unique
+  nameAr   String?
+  category String
+  track    String?
+  @@map("skills")
+}
+model CareerTrack {
+  id        String @id @default(cuid())
+  slug      String @unique
+  nameEn    String
+  nameAr    String
+  domain    String
+  salaryMin Int?
+  salaryMax Int?
+  currency  String @default("USD")
+  milestones Milestone[]
+  @@map("career_tracks")
+}
+model Milestone {
+  id        String @id @default(cuid())
+  trackId   String
+  yearLabel String
+  sortOrder Int
+  titleEn   String?
+  titleAr   String?
+  skillsEn  Json
+  skillsAr  Json
+  track CareerTrack @relation(fields: [trackId], references: [id], onDelete: Cascade)
+  @@map("milestones")
+}
