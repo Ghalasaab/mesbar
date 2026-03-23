@@ -111,7 +111,7 @@ export default function CareerTestResult({ onDashboard, onRetake }: Props) {
         style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 12, marginBottom: 28 }}
         className="stagger"
       >
-        {topFour.map(({ track, pct }) => {
+        {topFour.map(({ track, pct }: any) => {
           const meta = TRACK_META[track];
           const isTechTrack = meta.domain === 'tech';
           const name = t(lang, TRACK_KEY_MAP[track] as any) || track;
