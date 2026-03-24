@@ -5,6 +5,11 @@ import { t } from '@/lib/translations';
 import { TRACK_META } from '@/lib/questions';
 import type { TrackKey } from '@/types';
 
+type TopTrack = {
+  track: string
+  pct: number
+}
+
 interface Props {
   onDashboard: () => void;
   onRetake: () => void;
@@ -112,7 +117,7 @@ export default function CareerTestResult({ onDashboard, onRetake }: Props) {
         className="stagger"
       >
         {topFour.map(({ track, pct }: any) => {
-          const meta = TRACK_META[track];
+const meta = TRACK_META[track as keyof typeof TRACK_META];
           const isTechTrack = meta.domain === 'tech';
           const name = t(lang, TRACK_KEY_MAP[track] as any) || track;
           return (
