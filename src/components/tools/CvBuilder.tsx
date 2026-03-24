@@ -38,11 +38,16 @@ export default function CvBuilder() {
   };
 
   const updateExp = (id: string, field: string, value: unknown) => {
-    setCvField('experience', cvData.experience.map(e => e.id === id ? { ...e, [field]: value } : e));
+    setCvField(
+      'experience',
+      cvData.experience.map((e: any) =>
+        e.id === id ? { ...e, [field]: value } : e
+      )
+    );
   };
 
   const removeExp = (id: string) => {
-    setCvField('experience', cvData.experience.filter(e => e.id !== id));
+    setCvField('experience', cvData.experience.filter((e:any) => e.id !== id));
   };
 
   const addEducation = () => {
@@ -54,11 +59,11 @@ export default function CvBuilder() {
   };
 
   const updateEdu = (id: string, field: string, value: unknown) => {
-    setCvField('education', cvData.education.map(e => e.id === id ? { ...e, [field]: value } : e));
+    setCvField('education', cvData.education.map((e:any) => e.id === id ? { ...e, [field]: value } : e));
   };
 
   const removeEdu = (id: string) => {
-    setCvField('education', cvData.education.filter(e => e.id !== id));
+    setCvField('education', cvData.education.filter((e: any) => e.id !== id));
   };
 
   const addSkill = () => {
@@ -69,7 +74,7 @@ export default function CvBuilder() {
   };
 
   const removeSkill = (s: string) => {
-    setCvField('skills', cvData.skills.filter(sk => sk !== s));
+    setCvField('skills', cvData.skills.filter((sk:any) => sk !== s));
   };
 
   const addProject = () => {
@@ -78,11 +83,11 @@ export default function CvBuilder() {
   };
 
   const updateProject = (id: string, field: string, value: unknown) => {
-    setCvField('projects', cvData.projects.map(p => p.id === id ? { ...p, [field]: value } : p));
+    setCvField('projects', cvData.projects.map((p:any) => p.id === id ? { ...p, [field]: value } : p));
   };
 
   const removeProject = (id: string) => {
-    setCvField('projects', cvData.projects.filter(p => p.id !== id));
+    setCvField('projects', cvData.projects.filter((p:any) => p.id !== id));
   };
 
   // ─── AI Generate ───────────────────────────────────────────────────────────
@@ -204,14 +209,16 @@ export default function CvBuilder() {
                 { field: 'location', label: t(lang, 'cvLocation'), ph: lang === 'ar' ? 'الرياض، المملكة العربية السعودية' : 'Riyadh, Saudi Arabia' },
                 { field: 'linkedin', label: t(lang, 'cvLinkedin'), ph: 'linkedin.com/in/ahmed' },
                 { field: 'github', label: t(lang, 'cvGithub'), ph: 'github.com/ahmed' },
-              ].map(({ field, label, ph }) => (
-                <div key={field}>
-                  <label style={labelStyle}>{label}</label>
+              ].map((item: any) => (
+                <div key={item.field}>
+                  <label style={labelStyle}>{item.label}</label>
                   <input
                     style={inputStyle}
-                    placeholder={ph}
-                    value={(cvData as Record<string, string>)[field] || ''}
-                    onChange={e => setCvField(field as keyof typeof cvData, e.target.value)}
+                    placeholder={item.ph}
+                    value={(cvData as Record<string, string>)[item.field] || ''}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setCvField(item.field as string, e.target.value)
+                      }
                   />
                 </div>
               ))}
@@ -282,7 +289,7 @@ export default function CvBuilder() {
                   {lang === 'ar' ? 'أضف خبرتك العملية' : 'Add your work experience'}
                 </p>
               )}
-              {cvData.experience.map((exp, idx) => (
+              {cvData.experience.map((exp:any, idx:number) => (
                 <div key={exp.id} style={{ background: 'var(--surface)', borderRadius: 10, padding: 16, border: '1px solid var(--border)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
                     <span style={{ fontSize: 12, color: 'var(--pb)', fontWeight: 700 }}>
@@ -328,7 +335,7 @@ export default function CvBuilder() {
                         <div style={{ fontSize: 11, color: 'var(--pb)', fontWeight: 700, marginBottom: 8 }}>
                           ✦ {t(lang, 'cvEnhancedBullets')}
                         </div>
-                        {exp.enhancedBullets.map((b, i) => (
+                        {exp.enhancedBullets.map((b:String, i:number) => (
                           <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 6, padding: '8px 10px', background: 'var(--card)', borderRadius: 6, border: '1px solid var(--border)' }}>
                             <span style={{ color: 'var(--pb)', flexShrink: 0 }}>▸</span>
                             <span style={{ fontSize: 13, color: 'var(--dim)', lineHeight: 1.6 }}>{b}</span>
@@ -353,7 +360,7 @@ export default function CvBuilder() {
               </button>
             </div>
             <div style={{ borderTop: '1px solid var(--border)', paddingTop: 16, display: 'flex', flexDirection: 'column', gap: 14 }}>
-              {cvData.education.map((edu, idx) => (
+              {cvData.education.map((edu:any, idx:number) => (
                 <div key={edu.id} style={{ background: 'var(--surface)', borderRadius: 10, padding: 14, border: '1px solid var(--border)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
                     <span style={{ fontSize: 12, color: 'var(--pb)', fontWeight: 700 }}>
@@ -402,7 +409,7 @@ export default function CvBuilder() {
               </button>
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-              {cvData.skills.map(sk => (
+              {cvData.skills.map((sk:any) => (
                 <span
                   key={sk}
                   style={{
@@ -434,7 +441,7 @@ export default function CvBuilder() {
               </button>
             </div>
             <div style={{ borderTop: '1px solid var(--border)', paddingTop: 16, display: 'flex', flexDirection: 'column', gap: 14 }}>
-              {cvData.projects.map((proj) => (
+              {cvData.projects.map((proj:any) => (
                 <div key={proj.id} style={{ background: 'var(--surface)', borderRadius: 10, padding: 14, border: '1px solid var(--border)' }}>
                   <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
                     <button className="btn-ghost" style={{ padding: '3px 8px', fontSize: 11, color: '#FCA5A5' }} onClick={() => removeProject(proj.id)}>
@@ -525,7 +532,7 @@ export default function CvBuilder() {
                 <h2 style={{ fontFamily: 'sans-serif', fontSize: 13, fontWeight: 700, color: '#2A0E5A', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 10, borderBottom: '1px solid #e0d7f7', paddingBottom: 4 }}>
                   Work Experience
                 </h2>
-                {cvData.experience.map(exp => (
+                {cvData.experience.map((exp:any) => (
                   <div key={exp.id} style={{ marginBottom: 14 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                       <div>
@@ -537,7 +544,7 @@ export default function CvBuilder() {
                       </span>
                     </div>
                     <ul style={{ margin: '6px 0 0 16px', padding: 0 }}>
-                      {(exp.enhancedBullets || exp.bullets).filter(b => b.trim()).map((b, i) => (
+                      {(exp.enhancedBullets || exp.bullets).filter((b:any) => b.trim()).map((b:any, i:any) => (
                         <li key={i} style={{ fontSize: 12.5, color: '#444', lineHeight: 1.6, marginBottom: 3 }}>{b}</li>
                       ))}
                     </ul>
@@ -552,7 +559,7 @@ export default function CvBuilder() {
                 <h2 style={{ fontFamily: 'sans-serif', fontSize: 13, fontWeight: 700, color: '#2A0E5A', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 10, borderBottom: '1px solid #e0d7f7', paddingBottom: 4 }}>
                   Education
                 </h2>
-                {cvData.education.map(edu => (
+                {cvData.education.map((edu:any) => (
                   <div key={edu.id} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
                     <div>
                       <strong style={{ fontSize: 13 }}>{edu.degree} in {edu.field}</strong>
@@ -577,12 +584,12 @@ export default function CvBuilder() {
             )}
 
             {/* Projects */}
-            {cvData.projects.filter(p => p.name).length > 0 && (
+            {cvData.projects.filter((p:any) => p.name).length > 0 && (
               <div>
                 <h2 style={{ fontFamily: 'sans-serif', fontSize: 13, fontWeight: 700, color: '#2A0E5A', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 10, borderBottom: '1px solid #e0d7f7', paddingBottom: 4 }}>
                   Projects
                 </h2>
-                {cvData.projects.filter(p => p.name).map(proj => (
+                {cvData.projects.filter((p:any) => p.name).map((proj:any) => (
                   <div key={proj.id} style={{ marginBottom: 10 }}>
                     <strong style={{ fontSize: 13 }}>{proj.name}</strong>
                     {proj.technologies.length > 0 && (
@@ -674,7 +681,7 @@ export default function CvBuilder() {
                     ⚠ {t(lang, 'cvMissing')}
                   </div>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                    {atsResult.missingKeywords.map(kw => (
+                    {atsResult.missingKeywords.map((kw:any) => (
                       <span key={kw} style={{
                         background: 'rgba(252,165,165,.12)', border: '1px solid rgba(252,165,165,.3)',
                         borderRadius: 100, padding: '3px 10px', fontSize: 11, color: '#FCA5A5',
@@ -690,7 +697,7 @@ export default function CvBuilder() {
                   <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--pb)', marginBottom: 10 }}>
                     💡 {t(lang, 'cvSuggestions')}
                   </div>
-                  {atsResult.suggestions.map((s, i) => (
+                  {atsResult.suggestions.map((s:any, i:any) => (
                     <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
                       <span style={{ color: 'var(--pb)', flexShrink: 0, fontWeight: 700 }}>{i + 1}.</span>
                       <span style={{ fontSize: 13, color: 'var(--dim)', lineHeight: 1.6 }}>{s}</span>

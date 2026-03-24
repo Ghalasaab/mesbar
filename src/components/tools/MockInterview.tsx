@@ -60,7 +60,7 @@ export default function MockInterview() {
           targetTrack: trackInput,
           skills: cvData.skills || [],
           experienceSummary: cvData.experience
-            .map(e => `${e.title} at ${e.company}`)
+            .map((e: any) => `${e.title} at ${e.company}`)
             .join(', '),
         }),
       });
@@ -443,7 +443,7 @@ export default function MockInterview() {
             <div style={{ fontSize: 13, fontWeight: 700, color: '#34D399', marginBottom: 12 }}>
               ✅ {t(lang, 'intStrengths')}
             </div>
-            {(lang === 'ar' ? report.strengthsAr : report.strengths)?.map((s, i) => (
+            {(lang === 'ar' ? report.strengthsAr : report.strengths)?.map((s:any, i:any) => (
               <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
                 <span style={{ color: '#34D399', flexShrink: 0 }}>▸</span>
                 <span style={{ fontSize: 13, color: 'var(--dim)', lineHeight: 1.6 }}>{s}</span>
@@ -458,7 +458,7 @@ export default function MockInterview() {
             <div style={{ fontSize: 13, fontWeight: 700, color: '#FCD34D', marginBottom: 12 }}>
               💡 {t(lang, 'intImprove')}
             </div>
-            {(lang === 'ar' ? report.suggestionsAr : report.suggestions)?.map((s, i) => (
+            {(lang === 'ar' ? report.suggestionsAr : report.suggestions)?.map((s:any, i:any) => (
               <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
                 <span style={{ color: 'var(--pb)', flexShrink: 0, fontWeight: 700 }}>{i + 1}.</span>
                 <span style={{ fontSize: 13, color: 'var(--dim)', lineHeight: 1.6 }}>{s}</span>
@@ -473,7 +473,7 @@ export default function MockInterview() {
             <h4 style={{ fontFamily: 'var(--font-display)', fontSize: 14, fontWeight: 700, marginBottom: 14 }}>
               {lang === 'ar' ? 'تفصيل الأسئلة' : 'Per-Question Breakdown'}
             </h4>
-            {report.evaluations.map((ev, i) => {
+            {report.evaluations.map((ev:any, i:number) => {
               const q = questions.find(q => q.id === ev.questionId);
               const avg = Math.round((ev.clarity + ev.depth + ev.confidence + ev.relevance) / 4);
               return (
