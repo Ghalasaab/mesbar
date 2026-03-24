@@ -443,7 +443,7 @@ export default function MockInterview() {
             <div style={{ fontSize: 13, fontWeight: 700, color: '#34D399', marginBottom: 12 }}>
               ✅ {t(lang, 'intStrengths')}
             </div>
-            {(lang === 'ar' ? report.strengthsAr : report.strengths)?.map((s:any, i:any) => (
+            {(lang === 'ar' ? report.strengthsAr : report.strengths)?.map((s:any, i:number) => (
               <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
                 <span style={{ color: '#34D399', flexShrink: 0 }}>▸</span>
                 <span style={{ fontSize: 13, color: 'var(--dim)', lineHeight: 1.6 }}>{s}</span>
@@ -458,7 +458,7 @@ export default function MockInterview() {
             <div style={{ fontSize: 13, fontWeight: 700, color: '#FCD34D', marginBottom: 12 }}>
               💡 {t(lang, 'intImprove')}
             </div>
-            {(lang === 'ar' ? report.suggestionsAr : report.suggestions)?.map((s:any, i:any) => (
+            {(lang === 'ar' ? report.suggestionsAr : report.suggestions)?.map((s:any, i:number) => (
               <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
                 <span style={{ color: 'var(--pb)', flexShrink: 0, fontWeight: 700 }}>{i + 1}.</span>
                 <span style={{ fontSize: 13, color: 'var(--dim)', lineHeight: 1.6 }}>{s}</span>
