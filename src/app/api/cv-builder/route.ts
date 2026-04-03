@@ -58,8 +58,14 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, data: results });
   } catch (e: any) {
+    console.error('CV Builder route error:', e);
+  
     return NextResponse.json(
-      { success: false, error: e.message || 'Failed' },
+      {
+        success: false,
+        error: e?.message || 'Failed',
+        stack: process.env.NODE_ENV === 'development' ? e?.stack : undefined,
+      },
       { status: 500 }
     );
   }

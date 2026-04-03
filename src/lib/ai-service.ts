@@ -191,21 +191,31 @@ export async function generateInterviewReport(
       evaluations,
     };
   } catch {
-    return {
-      strengths: ['Clear communication', 'Good domain awareness'],
-      suggestions: [
-        'Add specific metrics to answers',
-        'Use STAR method for structure',
-        'Expand on technical details',
-      ],
-      overallScore: Math.round(
-        (avg('clarity') + avg('depth') + avg('confidence') + avg('relevance')) / 4
-      ),
-      clarity: avg('clarity'),
-      depth: avg('depth'),
-      confidence: avg('confidence'),
-      relevance: avg('relevance'),
-      evaluations,
-    };
+    async function chat(sys: string, user: string, maxTokens = 1000): Promise<string> {
+      const openai = getOpenAIClient();
+    
+      try {
+        const res = await openai.chat.completions.create({
+          model: MODEL,
+          max_tokens: maxTokens,
+          temperature: 0.4,
+          messages: [
+            { role: 'system', content: sys },
+            { role: 'user', content: user },
+          ],
+        });
+    
+        return res.choices[0].message.content?.trim() ?? '';
+      } catch (error: any) {
+        console.error('OpenAI chat error:', {
+          message: error?.message,
+          status: error?.status,
+          code: error?.code,
+          type: error?.type,
+          response: error?.response,
+        });
+        throw error;
+      }
+    }
   }
 }
