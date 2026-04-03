@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { SJT_QUESTIONS, TRACK_META } from '@/lib/questions';
 
+
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function GET() {
   return NextResponse.json({ success:true, data:{ questions:SJT_QUESTIONS } });
 }
