@@ -1,3 +1,17 @@
+import { NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
+
+export async function POST() {
+  return NextResponse.json(
+    { message: 'Auth is disabled for this project.' },
+    { status: 200 }
+  );
+}
+
+
+/*
+
 // src/app/api/auth/register/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
@@ -41,4 +55,4 @@ export async function POST(req: NextRequest) {
     console.error('Register error:', error);
     return NextResponse.json({ success: false, error: 'Registration failed' }, { status: 500 });
   }
-}
+} */
