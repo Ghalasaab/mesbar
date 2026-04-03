@@ -1,6 +1,6 @@
 import OpenAI from 'openai';
 
-const MODEL = process.env.OPENAI_MODEL || 'gpt-4o';
+const MODEL = process.env.OPENAI_MODEL || 'gpt-3.5-turbo';
 
 function getOpenAIClient() {
   const apiKey = process.env.OPENAI_API_KEY;
