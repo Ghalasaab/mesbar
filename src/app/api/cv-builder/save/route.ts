@@ -1,6 +1,6 @@
 // src/app/api/cv-builder/save/route.ts
+// src/app/api/cv-builder/save/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -10,10 +10,14 @@ export async function POST(req: NextRequest) {
     const { userId, cvData, atsScore, atsBreakdown } = await req.json();
 
     if (!userId || !cvData) {
-      return NextResponse.json({ success: false, error: 'userId and cvData are required' }, { status: 400 });
+      return NextResponse.json(
+        { success: false, error: 'userId and cvData are required' },
+        { status: 400 }
+      );
     }
 
-    // Upsert — one CV per user (most recent)
+    const { default: prisma } = await import('@/lib/prisma');
+
     const saved = await prisma.cvData.create({
       data: {
         userId,
@@ -33,9 +37,15 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    return NextResponse.json({ success: true, data: { id: saved.id } });
+    return NextResponse.json({
+      success: true,
+      data: { id: saved.id },
+    });
   } catch (error) {
     console.error('Save CV error:', error);
-    return NextResponse.json({ success: false, error: 'Failed to save CV' }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: 'Failed to save CV' },
+      { status: 500 }
+    );
   }
 }
