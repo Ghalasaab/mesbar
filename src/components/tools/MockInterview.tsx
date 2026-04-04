@@ -136,13 +136,22 @@ export default function MockInterview() {
         }),
       });
       const data = await res.json();
+if (data.success && data.data?.report) {
+  setReport(data.data.report);
+  setPhase('report');
+} else {
+  console.error('Report response error:', data);
+  alert(lang === 'ar' ? 'تعذر إنشاء تقرير المقابلة.' : 'Could not generate interview report.');
+  setPhase('interview');
+}
       if (data.success) {
         setReport(data.data.report);
         setPhase('report');
       }
     } catch (err) {
       console.error(err);
-      setPhase('report');
+      alert(lang === 'ar' ? 'فشل إنشاء التقرير. حاولي مرة أخرى.' : 'Failed to generate report. Please try again.');
+      setPhase('interview');
     } finally {
       setLoading(false);
     }
