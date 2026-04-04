@@ -11,21 +11,30 @@ function getOpenAIClient() {
 
   return new OpenAI({ apiKey });
 }
-
 async function chat(sys: string, user: string, maxTokens = 1000): Promise<string> {
   const openai = getOpenAIClient();
 
-  const res = await openai.chat.completions.create({
-    model: MODEL,
-    max_tokens: maxTokens,
-    temperature: 0.4,
-    messages: [
-      { role: 'system', content: sys },
-      { role: 'user', content: user },
-    ],
-  });
+  try {
+    const res = await openai.responses.create({
+      model: MODEL,
+      input: [
+        {
+          role: 'system',
+          content: sys,
+        },
+        {
+          role: 'user',
+          content: user,
+        },
+      ],
+      max_output_tokens: maxTokens,
+    });
 
-  return res.choices[0].message.content?.trim() ?? '';
+    return (res.output_text || '').trim();
+  } catch (error: any) {
+    console.error('OpenAI error:', error);
+    throw error;
+  }
 }
 
 export async function enhanceCvBullets(
