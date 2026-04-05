@@ -42,9 +42,9 @@ export async function POST(req: NextRequest) {
 
     if (body.action === 'report') {
       const rpt = await generateInterviewReport(
-        body.evaluations,
-        body.targetRole,
-        body.targetTrack
+        body.evaluations || [],
+        body.targetRole || '',
+        body.targetTrack || ''
       );
 
       return NextResponse.json({

@@ -124,15 +124,21 @@ export default function MockInterview() {
     setPhase('evaluating');
     setLoading(true);
     try {
+
+      console.log('SENDING REPORT:', {
+        evaluations,
+        targetRole,
+        targetTrack,
+      });
+
       const res = await fetch('/api/mock-interview', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'report',
-          evaluations,
-          targetRole,
-          targetTrack,
-          lang,
+          evaluations: evaluations || [],
+          targetRole: targetRole || '',
+          targetTrack: targetTrack || '',
         }),
       });
       const data = await res.json();
@@ -144,10 +150,6 @@ if (data.success && data.data?.report) {
   alert(lang === 'ar' ? 'تعذر إنشاء تقرير المقابلة.' : 'Could not generate interview report.');
   setPhase('interview');
 }
-      if (data.success) {
-        setReport(data.data.report);
-        setPhase('report');
-      }
     } catch (err) {
       console.error(err);
       alert(lang === 'ar' ? 'فشل إنشاء التقرير. حاولي مرة أخرى.' : 'Failed to generate report. Please try again.');
