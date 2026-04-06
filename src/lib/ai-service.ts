@@ -171,57 +171,51 @@ export async function evaluateInterviewAnswer(
 }
 
 export async function generateInterviewReport(
-  evaluations: any[],
+  evaluations: any[] = [],
   role: string,
   track: string
 ): Promise<any> {
-  const avg = (k: string) =>
-    Math.round(evaluations.reduce((s, e) => s + (e[k] || 0), 0) / evaluations.length);
+  const safeEvaluations = Array.isArray(evaluations) ? evaluations : [];
 
-  const sys = `Generate interview coaching feedback. Return ONLY valid JSON: {"strengths":["s1","s2"],"suggestions":["i1","i2","i3"]}`;
+  const avg = (k: string) => {
+    if (!safeEvaluations.length) return 0;
+    return Math.round(
+      safeEvaluations.reduce((s, e) => s + (Number(e?.[k]) || 0), 0) / safeEvaluations.length
+    );
+  };
 
-  const user = `Role: ${role}, Scores: Clarity ${avg('clarity')}, Depth ${avg('depth')}, Confidence ${avg('confidence')}, Relevance ${avg('relevance')}`;
+  const overallScore = Math.round(
+    (avg('clarity') + avg('depth') + avg('confidence') + avg('relevance')) / 4
+  );
 
-  const raw = await chat(sys, user, 300);
+  const fallback = {
+    strengths: ['Clear communication', 'Good domain awareness'],
+    suggestions: [
+      'Add specific metrics to your answers',
+      'Use the STAR method for structure',
+      'Expand on technical details and examples',
+    ],
+    overallScore,
+    clarity: avg('clarity'),
+    depth: avg('depth'),
+    confidence: avg('confidence'),
+    relevance: avg('relevance'),
+    evaluations: safeEvaluations,
+  };
 
   try {
+    const sys = `Generate interview coaching feedback. Return ONLY valid JSON: {"strengths":["s1","s2"],"suggestions":["i1","i2","i3"]}`;
+
+    const user = `Role: ${role}, Track: ${track}, Scores: Clarity ${avg('clarity')}, Depth ${avg('depth')}, Confidence ${avg('confidence')}, Relevance ${avg('relevance')}`;
+
+    const raw = await chat(sys, user, 300);
+
     return {
-      ...JSON.parse(raw.replace(/```json|```/g, '')),
-      overallScore: Math.round(
-        (avg('clarity') + avg('depth') + avg('confidence') + avg('relevance')) / 4
-      ),
-      clarity: avg('clarity'),
-      depth: avg('depth'),
-      confidence: avg('confidence'),
-      relevance: avg('relevance'),
-      evaluations,
+      ...fallback,
+      ...JSON.parse(raw.replace(/```json|```/g, '').trim()),
     };
-  } catch {
-    async function chat(sys: string, user: string, maxTokens = 1000): Promise<string> {
-      const openai = getOpenAIClient();
-    
-      try {
-        const res = await openai.chat.completions.create({
-          model: MODEL,
-          max_tokens: maxTokens,
-          temperature: 0.4,
-          messages: [
-            { role: 'system', content: sys },
-            { role: 'user', content: user },
-          ],
-        });
-    
-        return res.choices[0].message.content?.trim() ?? '';
-      } catch (error: any) {
-        console.error('OpenAI chat error:', {
-          message: error?.message,
-          status: error?.status,
-          code: error?.code,
-          type: error?.type,
-          response: error?.response,
-        });
-        throw error;
-      }
-    }
+  } catch (error: any) {
+    console.error('generateInterviewReport error:', error);
+    return fallback;
   }
 }
